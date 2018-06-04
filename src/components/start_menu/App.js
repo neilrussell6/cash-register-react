@@ -10,7 +10,7 @@ export const StartMenu = () => {
     <Grid className={classNames}>
       <Row>
         <Col xs={12}>
-          <PageHeader>Cash Regsiter</PageHeader>
+          <PageHeader>Cash Register</PageHeader>
         </Col>
       </Row>
       <Row>
