@@ -33,26 +33,26 @@ class Keypad extends React.PureComponent {
           </Col>
         </Row>
         <Row>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(1)}>1</Button></Col>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(2)}>2</Button></Col>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(3)}>3</Button></Col>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(1)}>1</Button></Col>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(2)}>2</Button></Col>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(3)}>3</Button></Col>
         </Row>
         <Row>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(4)}>4</Button></Col>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(5)}>5</Button></Col>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(6)}>6</Button></Col>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(4)}>4</Button></Col>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(5)}>5</Button></Col>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(6)}>6</Button></Col>
         </Row>
         <Row>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(7)}>7</Button></Col>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(8)}>8</Button></Col>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(9)}>9</Button></Col>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(7)}>7</Button></Col>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(8)}>8</Button></Col>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(9)}>9</Button></Col>
         </Row>
         <Row>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(CLEAR)}>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(CLEAR)}>
             <Glyphicon glyph="ban-circle" />
           </Button></Col>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(0)}>0</Button></Col>
-          <Col xs={4}><Button bsSize="lg" onClick={() => this.onPress(POINT)}>.</Button></Col>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(0)}>0</Button></Col>
+          <Col xs={4}><Button block bsSize="lg" onClick={() => this.onPress(POINT)}>.</Button></Col>
         </Row>
       </Grid>
     )

@@ -1,6 +1,8 @@
 import React from "react";
 import {Grid, Row, Col, PageHeader, Button, Glyphicon} from "react-bootstrap";
-import {LinkContainer} from "react-router-bootstrap";
+// import {LinkContainer} from "react-router-bootstrap";
+
+import {Link} from 'react-router-dom'
 
 export const StartMenu = () => {
 
@@ -15,11 +17,11 @@ export const StartMenu = () => {
       </Row>
       <Row>
         <Col xs={12}>
-          <LinkContainer to="/new-bill">
+          <Link to="/new-bill">
             <Button bsSize="lg" className="pull-center">
               Create a new bill <Glyphicon glyph="list-alt" />
             </Button>
-          </LinkContainer>
+          </Link>
         </Col>
       </Row>
     </Grid>

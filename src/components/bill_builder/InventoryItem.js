@@ -1,4 +1,5 @@
-import React, {PropTypes} from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import {Button, Glyphicon} from "react-bootstrap";
 import CurrencyFormat from "react-currency-format";
 

@@ -1,7 +1,7 @@
 import {KEYPAD_CLEAR, KEYPAD_SET_POINT, KEYPAD_UPDATE} from "../actions";
 
 function _calculatePartAmount(current_amount, value) {
-  return parseInt(current_amount.toString() + value.toString());
+  return parseInt(current_amount.toString() + value.toString(), 10);
 }
 
 function _calculateFractionalPartAmount(current_amount, value) {
@@ -13,7 +13,7 @@ function _calculateFractionalPartAmount(current_amount, value) {
 
 function _calculateAmount(integerPart, fractionalPart) {
   const fractionalPartStr = fractionalPart.toString().padEnd(2, 0);
-  return parseInt(integerPart.toString() + fractionalPartStr);
+  return parseInt(integerPart.toString() + fractionalPartStr, 10);
 }
 
 export const DEFAULT_STATE = {
