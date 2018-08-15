@@ -4,26 +4,29 @@ import {BILL_ADD_OR_UPDATE, BILL_REMOVE, BILL_UPDATE_SUCCESS} from "../actions";
 
 export const BILL_SUMMARY_DEFAULT_STATE = {total: 0};
 
+function calculateQuantity(quantity, adjustment) {
+  const result = quantity + adjustment;
+  return result > 0 ? result : 1;
+}
+
 function addOrUpdateBill(state, action) {
   const k = R.toString(action.id);
-  const item = {
+
+  // quantity : current + adjustment
+  const current_quantity = R.pathOr(0, [k, 'quantity'], state);
+  const quantity_adjustment = R.propOr(1, 'quantity', action);
+  const quantity = calculateQuantity(current_quantity, quantity_adjustment);
+
+  // unitprice : from state (if updating) OR from action.data (if adding)
+  const unitprice = R.propOr(R.path([k, 'unitprice'], state), 'unitprice', action.data);
+
+  const totalprice = quantity * unitprice;
+  const data = {
     ...R.pick(['name', 'unitprice'], action.data),
-    quantity: 1,
-    totalprice: action.data.unitprice,
+    quantity,
+    totalprice,
   };
-
-  // update
-  if (R.has(k, state)) {
-    const action_quantity = R.propOr(1, 'quantity', action);
-    const action_quantity_change = state[k].quantity + action_quantity;
-    const quantity = action_quantity_change > 1 ? action_quantity_change : 1;
-    const totalprice = state[k].unitprice * quantity;
-    const data = {...item, quantity, totalprice};
-    return mergeAt(k, data, state);
-  }
-
-  // add
-  return mergeAt(k, item, state);
+  return mergeAt(k, data, state);
 }
 
 function removeFromBill(state, action) {

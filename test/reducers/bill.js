@@ -16,6 +16,7 @@ describe('billItems reducer', () => {
 
       // when ... we add or update bill
       const reducer = billItems[BILL_ADD_OR_UPDATE];
+      console.log('-----------------------');
       const result = reducer(billItems_state, {
         type: BILL_ADD_OR_UPDATE,
         id: 102,
