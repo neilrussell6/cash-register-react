@@ -1,5 +1,12 @@
 import {KEYPAD_CLEAR, KEYPAD_SET_POINT, KEYPAD_UPDATE} from "../actions";
 
+export const KEYPAD_DEFAULT_STATE = {
+  integerPart: 0,
+  fractionalPart: 0,
+  hasPoint: false,
+  amount: 0,
+};
+
 function _calculatePartAmount(current_amount, value) {
   return parseInt(current_amount.toString() + value.toString(), 10);
 }
@@ -16,41 +23,33 @@ function _calculateAmount(integerPart, fractionalPart) {
   return parseInt(integerPart.toString() + fractionalPartStr, 10);
 }
 
-export const DEFAULT_STATE = {
-  integerPart: 0,
-  fractionalPart: 0,
-  hasPoint: false,
-  amount: 0,
-};
+function updateKeypad(state, action) {
+  const integerPart = !state.hasPoint
+    ? _calculatePartAmount(state.integerPart, action.value)
+    : state.integerPart;
+  const fractionalPart = state.hasPoint
+    ? _calculateFractionalPartAmount(state.fractionalPart, action.value)
+    : state.fractionalPart;
+  const amount = _calculateAmount(integerPart, fractionalPart);
 
-export function keypad(state = DEFAULT_STATE, action) {
-  switch (action.type) {
-    case KEYPAD_UPDATE:
-      const integerPart = !state.hasPoint
-        ? _calculatePartAmount(state.integerPart, action.value)
-        : state.integerPart;
-      const fractionalPart = state.hasPoint
-        ? _calculateFractionalPartAmount(state.fractionalPart, action.value)
-        : state.fractionalPart;
-      const amount = _calculateAmount(integerPart, fractionalPart);
-
-      return {
-        ...state,
-        integerPart,
-        fractionalPart,
-        amount,
-      };
-
-    case KEYPAD_SET_POINT:
-      return {
-        ...state,
-        hasPoint: true,
-      };
-
-    case KEYPAD_CLEAR:
-      return DEFAULT_STATE;
-
-    default:
-      return state;
-  }
+  return {
+    ...state,
+    integerPart,
+    fractionalPart,
+    amount,
+  };
 }
+
+function setHasPoint(state, action) {
+  return {...state, hasPoint: true};
+}
+
+function reset(state, action) {
+  return KEYPAD_DEFAULT_STATE;
+}
+
+export const keypad = {
+  [KEYPAD_UPDATE]: updateKeypad,
+  [KEYPAD_SET_POINT]: setHasPoint,
+  [KEYPAD_CLEAR]: reset,
+};

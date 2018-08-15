@@ -1,6 +1,7 @@
 import {expect} from "chai";
 import {billItems, billSummary} from "../../src/reducers/bill";
 import {BILL_ADD_OR_UPDATE, BILL_REMOVE, BILL_UPDATE_SUCCESS} from "../../src/actions";
+import {inventoryItems} from "../../src/reducers/inventory";
 
 describe('billItems reducer', () => {
 
@@ -14,7 +15,8 @@ describe('billItems reducer', () => {
       };
 
       // when ... we add or update bill
-      const result = billItems(billItems_state, {
+      const reducer = billItems[BILL_ADD_OR_UPDATE];
+      const result = reducer(billItems_state, {
         type: BILL_ADD_OR_UPDATE,
         id: 102,
         data: {name: 'BBB', unitprice: 2000},
@@ -40,7 +42,8 @@ describe('billItems reducer', () => {
       };
 
       // when ... we add or update bill
-      const result = billItems(billItems_state, {
+      const reducer = billItems[BILL_ADD_OR_UPDATE];
+      const result = reducer(billItems_state, {
         type: BILL_ADD_OR_UPDATE,
         id: 102,
         data: {id: 102, name: 'BBB', unitprice: 2000},
@@ -65,7 +68,8 @@ describe('billItems reducer', () => {
       };
 
       // when ... we add or update bill
-      const result = billItems(billItems_state, {
+      const reducer = billItems[BILL_ADD_OR_UPDATE];
+      const result = reducer(billItems_state, {
         type: BILL_ADD_OR_UPDATE,
         id: 102,
         data: {id: 102, name: 'BBB', unitprice: 2000},
@@ -91,7 +95,8 @@ describe('billItems reducer', () => {
       };
 
       // when ... we add or update bill
-      const result = billItems(billItems_state, {
+      const reducer = billItems[BILL_ADD_OR_UPDATE];
+      const result = reducer(billItems_state, {
         type: BILL_ADD_OR_UPDATE,
         id: 102,
         data: {id: 102, name: 'BBB', unitprice: 2000},
@@ -117,7 +122,8 @@ describe('billItems reducer', () => {
       };
 
       // when ... we add or update bill
-      const result = billItems(billItems_state, {
+      const reducer = billItems[BILL_ADD_OR_UPDATE];
+      const result = reducer(billItems_state, {
         type: BILL_ADD_OR_UPDATE,
         id: 102,
         data: {id: 102, name: 'BBB', unitprice: 2000},
@@ -146,7 +152,8 @@ describe('billItems reducer', () => {
       };
 
       // when ... we remove bill item 102
-      const result = billItems(billItems_state, {type: BILL_REMOVE, id: '102'});
+      const reducer = billItems[BILL_REMOVE];
+      const result = reducer(billItems_state, {type: BILL_REMOVE, id: '102'});
 
       // then ... should remove it from the bill
       const expected = {
@@ -168,7 +175,8 @@ describe('billSummary reducer', () => {
         const billSummary_state = {total: 0};
 
         // when ... we add or update bill
-        const result = billSummary(billSummary_state, {
+        const reducer = billSummary[BILL_UPDATE_SUCCESS];
+        const result = reducer(billSummary_state, {
           type: BILL_UPDATE_SUCCESS,
           billItems: {
             aaa: {totalprice: 2000},

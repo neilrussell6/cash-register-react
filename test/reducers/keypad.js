@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {keypad, DEFAULT_STATE} from "../../src/reducers/keypad";
+import {keypad, KEYPAD_DEFAULT_STATE} from "../../src/reducers/keypad";
 import {KEYPAD_UPDATE, KEYPAD_CLEAR, KEYPAD_SET_POINT} from "../../src/actions";
 
 describe('keypad reducer', () => {
@@ -8,12 +8,14 @@ describe('keypad reducer', () => {
 
     // TODO: parametrize
     it('should update keypad with provided value', () => {
+      const reducer = keypad[KEYPAD_UPDATE];
+
       // given
       // ... keypad is currently 0.00 with no point
       let keypad_state = {integerPart: 0, fractionalPart: 0, hasPoint: false, amount: 0};
 
       // when ... we update keypad with 4
-      let result = keypad(keypad_state, {
+      let result = reducer(keypad_state, {
         type: KEYPAD_UPDATE,
         value: 4,
       });
@@ -28,7 +30,7 @@ describe('keypad reducer', () => {
       keypad_state = {integerPart: 44, fractionalPart: 0, hasPoint: false, amount: 4400};
 
       // when ... we update keypad with 0
-      result = keypad(keypad_state, {
+      result = reducer(keypad_state, {
         type: KEYPAD_UPDATE,
         value: 0,
       });
@@ -43,7 +45,7 @@ describe('keypad reducer', () => {
       keypad_state = {integerPart: 440, fractionalPart: 0, hasPoint: true, amount: 44000};
 
       // when ... we update keypad with 7
-      result = keypad(keypad_state, {
+      result = reducer(keypad_state, {
         type: KEYPAD_UPDATE,
         value: 7,
       });
@@ -58,7 +60,7 @@ describe('keypad reducer', () => {
       keypad_state = {integerPart: 440, fractionalPart: 77, hasPoint: true, amount: 44077};
 
       // when ... we update keypad with 9
-      result = keypad(keypad_state, {
+      result = reducer(keypad_state, {
         type: KEYPAD_UPDATE,
         value: 7,
       });
@@ -74,12 +76,14 @@ describe('keypad reducer', () => {
 
     // TODO: parametrize
     it('should set point', () => {
+      const reducer = keypad[KEYPAD_SET_POINT];
+
       // given
       // ... keypad is currently 440.00 with no point
       let keypad_state = {integerPart: 440, fractionalPart: 0, hasPoint: false, amount: 44000};
 
       // when ... we update keypad with a point
-      let result = keypad(keypad_state, {type: KEYPAD_SET_POINT});
+      let result = reducer(keypad_state, {type: KEYPAD_SET_POINT});
 
       // then
       // ... should update amount as expected
@@ -91,7 +95,7 @@ describe('keypad reducer', () => {
       keypad_state = {integerPart: 440, fractionalPart: 0, hasPoint: true, amount: 44000};
 
       // when ... we update keypad with a point
-      result = keypad(keypad_state, {type: KEYPAD_SET_POINT});
+      result = reducer(keypad_state, {type: KEYPAD_SET_POINT});
 
       // then
       // ... should not update keypad
@@ -109,11 +113,12 @@ describe('keypad reducer', () => {
       const keypad_state = {integerPart: 440, fractionalPart: 77, hasPoint: true, amount: 44077};
 
       // when ... we clear the keypad
-      const result = keypad(keypad_state, {type: KEYPAD_CLEAR});
+      const reducer = keypad[KEYPAD_CLEAR];
+      const result = reducer(keypad_state, {type: KEYPAD_CLEAR});
 
       // then
       // ... should return keypad to it's default state
-      expect(result).to.deep.equal(DEFAULT_STATE);
+      expect(result).to.deep.equal(KEYPAD_DEFAULT_STATE);
     });
   });
 });

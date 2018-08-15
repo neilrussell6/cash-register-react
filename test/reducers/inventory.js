@@ -11,41 +11,19 @@ const inventory_response = [
 
 describe('inventoryItems reducer', () => {
 
-  describe('INVENTORY_INDEX_SUCCESS', () => {
-
-    it('should transform to object with id keys', () => {
-      // given ... an empty inventory
-
-      // when ... we inventory index was success
-      const result = inventoryItems({}, {
-        type: INVENTORY_INDEX_SUCCESS,
-        response: inventory_response,
-      });
-
-      // then
-      // ... should return object with id keys and expected values
-      // ... and set active to true
-      const expected = {
-        '101': {name: 'AAA', unitprice: 1000, active: true},
-        '102': {name: 'BBB', unitprice: 2000, active: true},
-        '103': {name: 'CCC', unitprice: 3000, active: true},
-      };
-      expect(result).to.deep.equal(expected);
-    });
-  });
-
   describe('BILL_ADD_OR_UPDATE', () => {
 
     it('should deactivate inventory item when it is added to bill', () => {
       // given
       // ... an inventory state containing active items 101, 102
-      const inventoryItems_state = {
+      const state = {
         '101': {name: 'AAA', unitprice: 1000, active: true},
         '102': {name: 'BBB', unitprice: 2000, active: true},
       };
 
       // when ... we add or update bill with item 102
-      const result = inventoryItems(inventoryItems_state, {
+      const reducer = inventoryItems[BILL_ADD_OR_UPDATE];
+      const result = reducer(state, {
         type: BILL_ADD_OR_UPDATE,
         id: '102',
         data: {name: 'BBB', unitprice: 2000},
@@ -67,10 +45,35 @@ describe('inventoryItems reducer', () => {
       };
 
       // when ... we remove bill item 102
-      const result = inventoryItems(inventoryItems_state, {type: BILL_REMOVE, id: '102'});
+      const reducer = inventoryItems[BILL_REMOVE];
+      const result = reducer(inventoryItems_state, {type: BILL_REMOVE, id: '102'});
 
       // then ... should reactivate item 102
       expect(result['102'].active).to.equal(true);
+    });
+  });
+
+  describe('INVENTORY_INDEX_SUCCESS', () => {
+
+    it('should transform to object with id keys', () => {
+      // given ... an empty inventory
+
+      // when ... inventory index was success
+      const reducer = inventoryItems[INVENTORY_INDEX_SUCCESS];
+      const result = reducer({}, {
+        type: INVENTORY_INDEX_SUCCESS,
+        response: inventory_response,
+      });
+
+      // then
+      // ... should return object with id keys and expected values
+      // ... and set active to true
+      const expected = {
+        '101': {name: 'AAA', unitprice: 1000, active: true},
+        '102': {name: 'BBB', unitprice: 2000, active: true},
+        '103': {name: 'CCC', unitprice: 3000, active: true},
+      };
+      expect(result).to.deep.equal(expected);
     });
   });
 });
