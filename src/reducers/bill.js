@@ -19,8 +19,6 @@ function addOrUpdateBill(state, action) {
     const quantity = action_quantity_change > 1 ? action_quantity_change : 1;
     const totalprice = state[k].unitprice * quantity;
     const data = {...item, quantity, totalprice};
-    console.log(item);
-    console.log(data);
     return mergeAt(k, data, state);
   }
 
